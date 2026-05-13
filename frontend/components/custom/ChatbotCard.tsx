@@ -15,7 +15,8 @@ export default function ChatbotCard() {
     // AI response from backend
     const generateTravelResponse = async (query: string) => {
         try {
-            const res = await fetch("http://127.0.0.1:8000/chat", {
+            const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+            const res = await fetch(`${API_BASE}/chat`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -98,14 +99,14 @@ export default function ChatbotCard() {
                     <div
                         key={index}
                         className={`flex ${chat.type === "user"
-                                ? "justify-end"
-                                : "justify-start"
+                            ? "justify-end"
+                            : "justify-start"
                             }`}
                     >
                         <div
                             className={`max-w-[70%] px-5 py-3 rounded-2xl ${chat.type === "user"
-                                    ? "bg-purple-600 text-white"
-                                    : "bg-gray-100 text-black"
+                                ? "bg-purple-600 text-white"
+                                : "bg-gray-100 text-black"
                                 }`}
                         >
                             {chat.message}

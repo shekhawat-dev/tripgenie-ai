@@ -13,8 +13,9 @@ export default function TripForm({ setItinerary }: any) {
         try {
             console.log("Button clicked");
 
+            const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
             const response = await axios.post(
-                "http://127.0.0.1:8000/generate-trip",
+                `${API_BASE}/generate-trip`,
                 {
                     destination,
                     days,
