@@ -1,222 +1,187 @@
 # TripGenie AI 🌍✈️
 
-An AI-powered trip planning application that helps users create personalized travel itineraries, manage group expenses, and get AI assistance for travel-related questions.
+> An AI-powered trip planning app with smart itineraries, budget tracking, hotel recommendations, and a travel chatbot.
 
-## 🎯 Features
+🔗 **Live Demo**: [tripgenie-ai-i4nd.vercel.app](https://tripgenie-ai-i4nd.vercel.app)
 
-### 1. **AI Trip Planner**
-- Generate customized trip itineraries based on destination, duration, budget, and number of travelers
-- Detailed day-by-day activities including morning, afternoon, and evening plans
-- Hotel recommendations based on budget constraints
-- Support for multiple Indian destinations (Jaipur, Goa, Manali)
+---
 
-### 2. **Expense Manager**
-- Track and manage trip expenses for group travel
-- Split expenses among multiple travelers
-- Categorize expenses for better organization
-- Generate settlement summaries to simplify payment distribution
-- Track who paid for what and settle balances efficiently
+## Features
 
-### 3. **AI Chatbot (TripGenie)**
-- Get instant answers to travel-related questions
-- Powered by OpenAI GPT-3.5 Turbo via OpenRouter API
-- Context-aware responses for trip planning assistance
+### 🗺️ AI Trip Planner
+Generate personalized day-by-day itineraries based on your destination, duration, budget, and number of travelers. Includes morning, afternoon, and evening activity suggestions along with hotel recommendations tailored to your budget.
 
-## 💻 Tech Stack
+### 💸 Expense Manager
+Track and split group travel expenses effortlessly. Categorize spending, see who paid for what, and get automatic settlement summaries so no one ends up out of pocket.
 
-### Backend
-- **Framework**: FastAPI
-- **Language**: Python 3.x
-- **API Communication**: RESTful API with CORS support
-- **AI Integration**: OpenRouter API (OpenAI GPT-3.5 Turbo)
-- **Database**: (Configurable - structure in place)
+### 🤖 AI Travel Assistant (TripGenie)
+Chat with an AI travel assistant powered by GPT-3.5 Turbo for instant, context-aware answers to all your travel questions.
 
-### Frontend
-- **Framework**: Next.js 16.2.6
-- **Language**: TypeScript & React 19
-- **Styling**: Tailwind CSS 4
-- **UI Components**: Shadcn/UI, Radix UI
-- **Animations**: Framer Motion
-- **Icons**: Lucide React
-- **Charts**: Recharts
-- **HTTP Client**: Axios
-- **Build Tool**: ESLint
+---
 
-## 📁 Project Structure
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | Next.js 16, React 19, TypeScript |
+| Styling | Tailwind CSS 4, Shadcn/UI, Framer Motion |
+| Charts | Recharts |
+| Backend | FastAPI, Python 3.11 |
+| AI | OpenRouter API (GPT-3.5 Turbo) |
+| Deployment | Vercel (frontend) + Render (backend) |
+
+---
+
+## Project Structure
 
 ```
-tripgen-ai/
+tripgenie-ai/
 ├── backend/
 │   └── app/
-│       ├── __init__.py
-│       ├── main.py              # FastAPI application setup
+│       ├── main.py              # FastAPI app & CORS setup
 │       ├── ai_service.py        # AI service utilities
 │       ├── database.py          # Database configuration
 │       └── routes/
 │           ├── trip_routes.py   # Trip planning endpoints
-│           └── chat_routes.py   # Chat/AI endpoints
+│           └── chat_routes.py   # Chatbot endpoints
 │
-└── frontend/
-    ├── app/
-    │   ├── layout.tsx           # Root layout
-    │   ├── page.tsx             # Home page
-    │   └── globals.css          # Global styles
-    ├── components/
-    │   ├── custom/
-    │   │   ├── TripForm.tsx      # Trip form component
-    │   │   ├── ItineraryCard.tsx # Display itinerary results
-    │   │   ├── ExpenseCard.tsx   # Expense manager component
-    │   │   ├── ChatbotCard.tsx   # AI chatbot interface
-    │   │   └── Navbar.tsx        # Navigation bar
-    │   └── ui/                  # Reusable UI components
-    ├── lib/
-    │   ├── api.ts               # API utilities
-    │   └── utils.ts             # Helper functions
-    └── public/                  # Static assets
+├── frontend/
+│   ├── app/
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── globals.css
+│   ├── components/
+│   │   ├── custom/
+│   │   │   ├── TripForm.tsx
+│   │   │   ├── ItineraryCard.tsx
+│   │   │   ├── ExpenseCard.tsx
+│   │   │   ├── ChatbotCard.tsx
+│   │   │   └── Navbar.tsx
+│   │   └── ui/
+│   └── lib/
+│       ├── api.ts
+│       └── utils.ts
+│
+├── requirements.txt
+└── render.yaml
 ```
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Python 3.8+
-- Node.js 16+
-- OpenRouter API Key (for AI features)
-
-### Backend Setup
-
-1. **Navigate to project root and activate virtual environment**:
-   ```bash
-   cd tripgen-ai
-   .venv\Scripts\Activate.ps1  # Windows PowerShell
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   pip install fastapi uvicorn python-dotenv requests pydantic
-   ```
-
-3. **Set up environment variables** (create `.env` in backend):
-   ```
-   OPENROUTER_API_KEY=your_api_key_here
-   ```
-
-4. **Run the backend server**:
-   ```bash
-   uvicorn app.main:app --reload
-   ```
-   The API will be available at `http://127.0.0.1:8000`
-
-### Frontend Setup
-
-1. **Navigate to frontend directory**:
-   ```bash
-   cd frontend
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
-3. **Run development server**:
-   ```bash
-   npm run dev
-   ```
-   The app will be available at `http://localhost:3000`
-
-## 📡 API Endpoints
-
-### Trip Planning
-- **POST** `/generate-trip`
-  - Generate a customized trip itinerary
-  - Request body:
-    ```json
-    {
-      "destination": "jaipur",
-      "days": 5,
-      "travelers": 4,
-      "budget": 50000,
-      "current_location": "Delhi"
-    }
-    ```
-  - Returns: Itinerary with daily activities and hotel recommendations
-
-### Chat/AI
-- **POST** `/chat`
-  - Get AI assistance for travel questions
-  - Request body:
-    ```json
-    {
-      "message": "What should I pack for a trip to Goa?"
-    }
-    ```
-  - Returns: AI-generated response
-
-### Health Check
-- **GET** `/`
-  - Returns: `{"message": "TripAI backend running"}`
-
-## 🔧 Configuration
-
-### Supported Destinations
-Currently supports:
-- **Jaipur** - Historical & cultural sites
-- **Goa** - Beach & adventure activities
-- **Manali** - Mountain & adventure activities
-
-### Budget-Based Hotel Recommendations
-- Budget < ₹10,000: Budget hotels and hostels
-- Budget ₹10,000 - ₹50,000: Mid-range hotels
-- Budget > ₹50,000: Luxury hotels
-
-## 🌟 Key Features in Detail
-
-### Trip Form Component
-Users input:
-- Destination (select from available options)
-- Number of days
-- Number of travelers
-- Total budget
-- Starting location (defaults to Delhi)
-
-### AI Chatbot
-- Context-aware travel advice
-- Powered by GPT-3.5 Turbo
-- Real-time responses
-
-### Expense Splitting
-- Track individual expenses
-- Automatic calculation of who owes whom
-- Settlement tracking for group trips
-
-## 🔐 Security Features
-- CORS middleware enabled for API access control
-- Environment variables for sensitive data
-- Error handling on both frontend and backend
-
-## 📝 Development Notes
-- The backend includes comprehensive error handling and debugging logs
-- Frontend uses TypeScript for type safety
-- Responsive design with Tailwind CSS
-- Component-based architecture for maintainability
-
-## 🚧 Future Enhancements
-- Database integration for persistent data storage
-- User authentication system
-- Payment gateway integration
-- Multi-language support
-- Real-time expense splitting notifications
-- Integration with booking platforms
-
-## 🤝 Contributing
-Feel free to fork, modify, and improve this project. Make sure to test both frontend and backend changes.
-
-## 📄 License
-This project is open source and available for personal and educational use.
-
-## 📧 Support
-For issues, questions, or suggestions, please refer to the project documentation or create an issue in the repository.
 
 ---
 
-**Happy Planning! 🎉**
+## Getting Started
+
+### Prerequisites
+- Python 3.11+
+- Node.js 16+
+- OpenRouter API Key → [openrouter.ai](https://openrouter.ai)
+
+### Backend Setup
+
+```bash
+# From project root
+pip install -r requirements.txt
+
+# Create .env file inside backend/
+echo "OPENROUTER_API_KEY=your_key_here" > backend/.env
+
+# Start the server
+cd backend
+uvicorn app.main:app --reload
+```
+
+Backend runs at `http://localhost:8000`
+
+### Frontend Setup
+
+```bash
+cd frontend
+
+# Create .env.local
+echo "NEXT_PUBLIC_API_URL=http://localhost:8000" > .env.local
+
+# Install and run
+npm install
+npm run dev
+```
+
+Frontend runs at `http://localhost:3000`
+
+---
+
+## API Endpoints
+
+### `POST /generate-trip`
+Generate a trip itinerary.
+```json
+{
+  "destination": "jaipur",
+  "days": 5,
+  "travelers": 4,
+  "budget": 50000,
+  "current_location": "Delhi"
+}
+```
+
+### `POST /chat`
+Chat with the AI travel assistant.
+```json
+{
+  "message": "What should I pack for Goa in December?"
+}
+```
+
+### `GET /`
+Health check → `{"message": "TripAI backend running"}`
+
+---
+
+## Supported Destinations
+
+| Destination | Highlights |
+|---|---|
+| 🏰 Jaipur | Historical & cultural sites |
+| 🏖️ Goa | Beaches & nightlife |
+| 🏔️ Manali | Mountains & adventure |
+
+### Budget-Based Hotel Recommendations
+- Under ₹10,000 → Budget hotels & hostels
+- ₹10,000 – ₹50,000 → Mid-range hotels
+- Above ₹50,000 → Luxury hotels
+
+---
+
+## Deployment
+
+| Service | Platform | URL |
+|---|---|---|
+| Frontend | Vercel | [tripgenie-ai-i4nd.vercel.app](https://tripgenie-ai-i4nd.vercel.app) |
+| Backend | Render | [tripgenie-ai-09dw.onrender.com](https://tripgenie-ai-09dw.onrender.com) |
+
+> **Note:** The backend is hosted on Render's free tier and may take 30–60 seconds to wake up after inactivity.
+
+---
+
+## Roadmap
+
+- [ ] Database integration for persistent storage
+- [ ] User authentication
+- [ ] More Indian destinations
+- [ ] Real-time expense notifications
+- [ ] Booking platform integration
+- [ ] Multi-language support
+
+---
+
+## Contributing
+
+Fork the repo, make your changes, and open a pull request. Please test both frontend and backend before submitting.
+
+---
+
+## License
+
+Open source — free for personal and educational use.
+
+---
+
+Made with ❤️ by [shekhawat-dev](https://github.com/shekhawat-dev)
