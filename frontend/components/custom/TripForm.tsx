@@ -8,10 +8,31 @@ export default function TripForm({ setItinerary }: any) {
     const [days, setDays] = useState("");
     const [travelers, setTravelers] = useState("");
     const [budget, setBudget] = useState("");
+    const [locationMessage, setLocationMessage] = useState("");
 
     const handleGenerateTrip = async () => {
         try {
-            console.log("Button clicked");
+            let latitude = null;
+            let longitude = null;
+
+            if (typeof window !== "undefined" && navigator.geolocation) {
+                try {
+                    const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+                        navigator.geolocation.getCurrentPosition(resolve, reject, {
+                            enableHighAccuracy: true,
+                            timeout: 10000,
+                        });
+                    });
+
+                    latitude = position.coords.latitude;
+                    longitude = position.coords.longitude;
+                    setLocationMessage("Using your current location for the trip plan.");
+                } catch {
+                    setLocationMessage("Location permission denied. Please select your city manually.");
+                }
+            } else {
+                setLocationMessage("Location services are unavailable. Please select your city manually.");
+            }
 
             const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
             const response = await axios.post(
@@ -21,10 +42,10 @@ export default function TripForm({ setItinerary }: any) {
                     days,
                     travelers,
                     budget,
+                    latitude,
+                    longitude,
                 }
             );
-
-            console.log("Backend Response:", response.data);
 
             setItinerary(response.data);
 
@@ -74,6 +95,10 @@ export default function TripForm({ setItinerary }: any) {
                     className="border p-4 rounded-xl"
                 />
             </div>
+
+            {locationMessage ? (
+                <p className="text-sm text-gray-500 mb-4">{locationMessage}</p>
+            ) : null}
 
             <button
                 onClick={handleGenerateTrip}

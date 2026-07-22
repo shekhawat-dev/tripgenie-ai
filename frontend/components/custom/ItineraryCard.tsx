@@ -100,6 +100,18 @@ export default function ItineraryCard({ itinerary }: any) {
                             <p className="text-green-600 font-medium">
                                 {hotel.price}
                             </p>
+
+                            <p className="text-sm text-gray-600 mt-1">
+                                Rating: {hotel.rating || "4.5/5"}
+                            </p>
+
+                            <p className="text-sm text-gray-600 mt-1">
+                                {hotel.description || "Comfortable stay suited for your trip."}
+                            </p>
+
+                            <p className="text-xs text-gray-500 mt-2">
+                                {hotel.match_reason || "Good match for your selected budget."}
+                            </p>
                         </div>
                     )
                 )}
